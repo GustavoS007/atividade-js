@@ -1,45 +1,69 @@
-const usuario = prompt("Digite seu nome e sobrenome:");
+document.addEventListener("DOMContentLoaded", function () {
 
-const diasDaSemana = [
-    "Domingo",
-    "Segunda-Feira",
-    "Terça-Feira",
-    "Quarta-Feira",
-    "Quinta-Feira",
-    "Sexta-Feira",
-    "Sábado"
-];
+   
 
-const agora = new Date();
+    const campoBusca = document.getElementById("campoBusca");
+    const tabela = document.getElementById("tabelaDispositivos");
 
-const diaSemana = diasDaSemana[agora.getDay()];
-const dia = String(agora.getDate()).padStart(2, "0");
-const mes = String(agora.getMonth() + 1).padStart(2, "0");
-const ano = agora.getFullYear();
-const hora = String(agora.getHours()).padStart(2, "0");
-const minuto = String(agora.getMinutes()).padStart(2, "0");
+    campoBusca.addEventListener("input", function () {
 
-const deslocamento = -agora.getTimezoneOffset();
-const sinal = deslocamento >= 0 ? "+" : "-";
-const horasFuso = String(Math.floor(Math.abs(deslocamento) / 60)).padStart(2, "0");
-const minutosFuso = String(Math.abs(deslocamento) % 60).padStart(2, "0");
+        const textoBusca = campoBusca.value.toLowerCase();
 
-const fusoHorario = `${sinal}${horasFuso}:${minutosFuso}`;
+        const linhas = tabela.querySelectorAll("tbody tr");
 
-const dataAtual = `${diaSemana}, ${dia}/${mes}/${ano} – ${hora}:${minuto} (${fusoHorario})`;
+        linhas.forEach(function (linha) {
 
-console.log("Usuário:", usuario);
-console.log("Data atual:", dataAtual);
+            const textoLinha = linha.textContent.toLowerCase();
 
-function exibirBoasVindas() {
-    const mensagem = document.querySelector("#mensagem-boas-vindas");
+            if (textoLinha.includes(textoBusca)) {
+                linha.style.display = "";
+            } else {
+                linha.style.display = "none";
+            }
 
-    if (mensagem) {
-        mensagem.textContent = `Olá, ${usuario}! Hoje é ${dataAtual}`;
-        console.log("Elemento de boas-vindas encontrado:", mensagem);
-    } else {
-        console.log("Elemento #mensagem-boas-vindas não foi encontrado.");
-    }
-}
+        });
 
-exibirBoasVindas();
+    });
+
+
+    
+
+    const btnTema = document.getElementById("btnTema");
+
+    btnTema.addEventListener("click", function () {
+
+        document.body.classList.toggle("dark-theme");
+
+        if (document.body.classList.contains("dark-theme")) {
+            btnTema.textContent = "Light Mode";
+        } else {
+            btnTema.textContent = "Dark Mode";
+        }
+
+    });
+
+
+   
+
+    const btnMenu = document.getElementById("btnMenu");
+    const menuLateral = document.getElementById("menuLateral");
+
+    btnMenu.addEventListener("click", function () {
+
+        menuLateral.classList.toggle("menu-aberto");
+
+    });
+
+
+   
+
+    const btnAccordion = document.getElementById("btnAccordion");
+    const painelAccordion = document.getElementById("painelAccordion");
+
+    btnAccordion.addEventListener("click", function () {
+
+        painelAccordion.classList.toggle("aberto");
+
+    });
+
+});
